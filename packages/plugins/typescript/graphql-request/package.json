@@ -25,13 +25,6 @@
   "devDependencies": {
     "nock": "12.0.3"
   },
-  "sideEffects": false,
-  "main": "dist/index.cjs.js",
-  "module": "dist/index.esm.js",
-  "typings": "dist/index.d.ts",
-  "typescript": {
-    "definition": "dist/index.d.ts"
-  },
   "buildOptions": {
     "input": "./src/index.ts"
   },

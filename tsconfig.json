@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
+    "incremental": true,
     "baseUrl": ".",
+    "outDir": "dist",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "importHelpers": true,
