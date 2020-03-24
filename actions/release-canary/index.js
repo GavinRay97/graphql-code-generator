@@ -89,7 +89,7 @@ async function main() {
 
     console.log(output);
 
-    const version = output.match(/version:\s+([a-z0-9\.\-\+]+)/)[1];
+    const version = output.match(/=\> ([a-z0-9\.\-\+]+)/)[1];
 
     core.setOutput('version', version);
   } catch (error) {
