@@ -68,6 +68,7 @@ const core = __webpack_require__(470);
 async function main() {
   try {
     const token = core.getInput('npm-token');
+    const script = core.getInput('npm-script');
 
     if (!token) {
       core.info('Skipping... Missing npm-token input');
@@ -82,7 +83,7 @@ async function main() {
       encoding: 'utf-8',
     });
 
-    const output = execSync('npm run ci:release:canary > out.txt', {
+    const output = execSync(`npm run ${script} > out.txt`, {
       encoding: 'utf-8',
     });
 
