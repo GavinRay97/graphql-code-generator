@@ -1,0 +1,13 @@
+name: 'Release Canary Version'
+description: 'Release a canary version'
+inputs:
+  npm-token:
+    description: 'NPM Auth Token'
+outputs:
+  released:
+    description: 'Was a canary version released?'
+  version:
+    description: 'Version number'
+runs:
+  using: 'node12'
+  main: 'index.js'

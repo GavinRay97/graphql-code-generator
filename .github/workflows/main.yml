@@ -71,29 +71,44 @@ jobs:
         run: yarn install && git checkout yarn.lock
       - name: Build
         run: yarn build
+      - name: Build Action
+        run: yarn build:action:release-canary
       - name: Release Canary
-        run: |
-          echo "Source Repo: ${{github.repository}}"
-          if [ "${{github.repository}}" == "dotansimha/graphql-code-generator" ] && [ "${{ secrets.NODE_AUTH_TOKEN }}" != "" ]
-          then
-              echo "//registry.npmjs.org/:_authToken=${{ secrets.NODE_AUTH_TOKEN }}" > .npmrc
-              rm -rf out.txt
-              npm run ci:release:canary > out.txt
-              export SYSTEM_PULLREQUEST_PULLREQUESTNUMBER=`echo $GITHUB_REF | grep -Eo '[0-9]{1,4}'`
+        id: canary
+        uses: ./actions/release-canary
+        if: github.repository == 'dotansimha/graphql-code-generator'
+        with:
+          npm-token: ${{ secrets.NODE_AUTH_TOKEN }}
+      # - name: Release Canary
+      #   run: |
+      #     echo "Source Repo: ${{github.repository}}"
+      #     if [ "${{github.repository}}" == "dotansimha/graphql-code-generator" ] && [ "${{ secrets.NODE_AUTH_TOKEN }}" != "" ]
+      #     then
+      #         echo "//registry.npmjs.org/:_authToken=${{ secrets.NODE_AUTH_TOKEN }}" > .npmrc
+      #         rm -rf out.txt
+      #         npm run ci:release:canary > out.txt
+      #         export SYSTEM_PULLREQUEST_PULLREQUESTNUMBER=`echo $GITHUB_REF | grep -Eo '[0-9]{1,4}'`
 
-              if [ "$SYSTEM_PULLREQUEST_PULLREQUESTNUMBER" != "" ]
-              then
-                export BUILD_REPOSITORY_NAME="${{github.repository}}"
-                export ALPHA_VERSION=`cat out.txt | sed -n 's/.*cli => //p' | sed -n 's/+.*//p'`
-                export GH_API_TOKEN="${{ secrets.GH_API_TOKEN }}"
-                ./scripts/comment.js
-              fi
-          else    
-              echo "Skipping canary publish due to a fork/PR..."
-          fi
+      #         if [ "$SYSTEM_PULLREQUEST_PULLREQUESTNUMBER" != "" ]
+      #         then
+      #           export BUILD_REPOSITORY_NAME="${{github.repository}}"
+      #           export ALPHA_VERSION=`cat out.txt | sed -n 's/.*cli => //p' | sed -n 's/+.*//p'`
+      #           export GH_API_TOKEN="${{ secrets.GH_API_TOKEN }}"
+      #           ./scripts/comment.js
+      #         fi
+      #     else
+      #         echo "Skipping canary publish due to a fork/PR..."
+      #     fi
       - name: Publish a message
+        if: steps.canary.outputs.released
         uses: 'kamilkisiela/pr-comment@master'
         with:
-          message: 'test...'
+          message: |
+            The latest changes of this PR are available as alpha in npm: ${{ steps.canary.outputs.released }}
+
+            Quickly update your package.json by running:
+
+                npx match-version @graphql-codegen ${{ steps.canary.outputs.released }}
+
           bot-token: ${{ secrets.GH_API_TOKEN }}
           bot: 'theguild-bot'
