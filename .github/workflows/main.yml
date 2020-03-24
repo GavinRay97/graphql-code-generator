@@ -71,8 +71,6 @@ jobs:
         run: yarn install && git checkout yarn.lock
       - name: Build
         run: yarn build
-      - name: Build Action
-        run: yarn build:action:release-canary
       - name: Release Canary
         id: canary
         uses: ./actions/release-canary
