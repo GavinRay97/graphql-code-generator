@@ -91,3 +91,9 @@ jobs:
           else    
               echo "Skipping canary publish due to a fork/PR..."
           fi
+      - name: Publish a message
+        uses: kamilkisiela/pr-comment
+        with:
+          message: 'test...'
+          bot-token: ${{ secrets.GH_API_TOKEN }}
+          bot: 'theguild-bot'
