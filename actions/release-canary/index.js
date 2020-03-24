@@ -87,7 +87,8 @@ async function main() {
       encoding: 'utf-8',
     });
 
-    core.info(output);
+    core.info(JSON.stringify(output));
+    console.log(JSON.stringify(output));
 
     const version = output.match(/=\> ([a-z0-9\.\-\+]+)/)[1];
 
