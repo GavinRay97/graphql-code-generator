@@ -89,7 +89,7 @@ async function main() {
 
     console.log(output);
 
-    const version = output.match(/=\> ([a-z0-9\.\-\+]+)\n/)[1];
+    const version = output.match(/\@graphql-codegen\/plugin-helpers@([a-z0-9\.\-\+]+)/)[1];
 
     core.setOutput('version', version);
   } catch (error) {
