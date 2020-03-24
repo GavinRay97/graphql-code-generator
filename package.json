@@ -17,7 +17,7 @@
     "ci:release:canary": "lerna publish --contents dist --ignore @graphql-codegen/live-demo --ignore @graphql-codegen/website --force-publish=\"*\" --preid \"alpha-`git rev-parse --short HEAD`\" --canary --exact --yes",
     "generate:examples": "./dev-test/generate-all.sh",
     "build-website": "lerna run build",
-    "build:action:release-canary": "ncc actions/release-canary/main.js --out actions/release-canary"
+    "build:action:release-canary": "ncc build ./actions/release-canary/action.js --out actions/release-canary"
   },
   "husky": {
     "hooks": {
@@ -44,6 +44,7 @@
   "devDependencies": {
     "axios": "0.19.2",
     "@actions/core": "1.2.3",
+    "@zeit/ncc": "0.22.0",
     "@apollo/react-common": "3.1.3",
     "@apollo/react-components": "3.1.3",
     "@apollo/react-hoc": "3.1.3",
