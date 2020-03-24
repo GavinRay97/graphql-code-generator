@@ -85,8 +85,9 @@ async function main() {
 
     const output = execSync('npm run ci:release:canary > out.txt', {
       encoding: 'utf-8',
-      stdio: 'inherit',
     });
+
+    console.log(output);
 
     const version = output.match(/=\> ([a-z0-9\.\-\+]+)\n/)[1];
 

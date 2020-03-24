@@ -25,6 +25,8 @@ async function main() {
       encoding: 'utf-8',
     });
 
+    console.log(output);
+
     const version = output.match(/=\> ([a-z0-9\.\-\+]+)\n/)[1];
 
     core.setOutput('version', version);
