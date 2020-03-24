@@ -62,7 +62,6 @@ module.exports = require("os");
 
 /// @ts-check
 const fs = __webpack_require__(747);
-const path = __webpack_require__(622);
 const { execSync } = __webpack_require__(4);
 const core = __webpack_require__(470);
 
@@ -89,7 +88,7 @@ async function main() {
 
     console.log(output);
 
-    const version = output.match(/\@graphql-codegen\/plugin-helpers@([a-z0-9\.\-\+]+)/)[1];
+    const version = output.match(/version:\s+([a-z0-9\.\-\+]+)/)[1];
 
     core.setOutput('version', version);
   } catch (error) {

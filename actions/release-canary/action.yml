@@ -3,9 +3,12 @@ description: 'Release a canary version'
 inputs:
   npm-token:
     description: 'NPM Auth Token'
+  script:
+    description: 'NPM script that runs lerna publish'
+    required: true
 outputs:
   released:
-    description: 'Was a canary version released?'
+    description: 'Released?'
   version:
     description: 'Version number'
 runs:

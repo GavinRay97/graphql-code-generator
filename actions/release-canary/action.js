@@ -1,6 +1,5 @@
 /// @ts-check
 const fs = require('fs');
-const path = require('path');
 const { execSync } = require('child_process');
 const core = require('@actions/core');
 
@@ -27,7 +26,7 @@ async function main() {
 
     console.log(output);
 
-    const version = output.match(/\@graphql-codegen\/plugin-helpers@([a-z0-9\.\-\+]+)/)[1];
+    const version = output.match(/version:\s+([a-z0-9\.\-\+]+)/)[1];
 
     core.setOutput('version', version);
   } catch (error) {
